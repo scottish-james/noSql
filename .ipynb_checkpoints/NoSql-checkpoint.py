@@ -120,3 +120,6 @@ if __name__ == "__main__":
     drop_tables(session, ["music_library", "album_library", "artist_library"])
     create_tables(session, table_queries)
     insert_all_data(session, data, insert_into_queries)
+    
+    session.shutdown()
+    cluster.shutdown()
