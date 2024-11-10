@@ -1,121 +1,73 @@
-README
-======
+Cassandra Database Setup
+========================
 
 Overview
 --------
 
-This project demonstrates how to connect to a Cassandra database using Python, create a keyspace, and manage tables. The script includes operations for:
+This script connects to a Cassandra cluster, creates a keyspace, defines tables, and inserts sample data using Python and the Cassandra driver.
 
-*   Establishing a connection to a Cassandra cluster
-*   Creating a keyspace
-*   Dropping and creating tables
-*   Executing queries programmatically
+Requirements
+------------
 
-Prerequisites
+*   Python 3.x
+*   Cassandra Cluster running locally or at the specified address (`127.0.0.1` by default)
+
+Installation
+------------
+
+1.  Install Python dependencies:
+    
+    ```
+    pip install cassandra-driver
+    ```
+    
+
+Configuration
 -------------
 
-*   **Python 3.x**
-*   **Cassandra** database running locally or remotely
-*   **Cassandra Driver for Python** (`cassandra-driver`)
-
-### Installing the Cassandra Driver
-
-To install the driver, run:
-
-```bash
-pip install cassandra-driver
-```
+*   Ensure your Cassandra cluster is running and accessible at `127.0.0.1`, or modify `cluster_address` in the script accordingly.
 
 Usage
 -----
 
-### 1\. Establish Connection
-
-The script initializes a connection to a Cassandra cluster:
-
-```python
-cluster = Cluster(['127.0.0.1'])
-session = cluster.connect()
-```
-
-It prints a success message if the connection is established.
-
-### 2\. Keyspace Creation
-
-The keyspace `james_keyspace` is created with `SimpleStrategy` and a replication factor of 1:
-
-```python
-session.execute("""
-    CREATE KEYSPACE IF NOT EXISTS james_keyspace
-    WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 1 }
-""")
-session.set_keyspace('james_keyspace')
-```
-
-### 3\. Dropping Existing Tables
-
-The script drops any pre-existing tables:
-
-```python
-drop_tables = ['musicLibrary', 'albumLibrary', 'artistLibrary']
-
-for table in drop_tables:
-    session.execute(f"DROP TABLE IF EXISTS {table}")
-```
-
-### 4\. Table Creation
-
-It defines and creates the following tables:
-
-*   **music\_library**
-*   **album\_library**
-*   **artist\_library**
-
-Each table is created based on specific queries:
-
-```python
-table_queries = {
-    "music_library": """
-        CREATE TABLE IF NOT EXISTS music_library(
-            year int,
-            artist_name text, 
-            album_name text, 
-            PRIMARY KEY (year, artist_name)
-        );
-    """,
-    ...
-}
-
-for table_name, query in table_queries.items():
-    create_table(session, query, table_name)
-```
-
-### 5\. `create_table` Function
-
-This reusable function executes table creation queries:
-
-```python
-def create_table(session, query, table_name):
-    try:
-        session.execute(query)
-        print(f"'{table_name}' table created successfully.")
-    except Exception as e:
-        print(f"Failed to create table '{table_name}': {e}")
-```
-
-Running the Script
-------------------
-
-1.  Ensure Cassandra is running on `127.0.0.1`.
-2.  Execute the script:
+1.  Run the script:
     
-    ```bash
-    python script_name.py
+    ```
+    python cassandra_setup.py
     ```
     
-3.  Verify the outputs in your Cassandra database.
 
-License
--------
+Script Details
+--------------
 
-This project is licensed under the MIT License.
+### `cassandra_setup.py`
+
+#### Functions:
+
+1.  **`establish_connection(cluster_address='127.0.0.1')`**:
+    
+    *   Establishes a connection to the Cassandra cluster.
+2.  **`create_keyspace(session, keyspace_name)`**:
+    
+    *   Creates a keyspace if it doesn't exist and sets it.
+3.  **`drop_tables(session, tables)`**:
+    
+    *   Drops specified tables if they exist.
+4.  **`create_tables(session, table_queries)`**:
+    
+    *   Creates tables based on provided queries.
+5.  **`insert_all_data(session, data, queries)`**:
+    
+    *   Inserts data into tables based on provided queries.
+
+#### Table Queries:
+
+*   Defines schema for `music_library`, `album_library`, and `artist_library` tables.
+
+#### Insert Queries:
+
+*   Provides queries for inserting sample data into respective tables.
+
+#### Sample Data:
+
+*   Includes sample data for demonstration purposes.
