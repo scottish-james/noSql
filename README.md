@@ -1,7 +1,7 @@
 README
 ======
 
-## Overview
+Overview
 --------
 
 This project demonstrates how to connect to a Cassandra database using Python, create a keyspace, and manage tables. The script includes operations for:
@@ -11,7 +11,7 @@ This project demonstrates how to connect to a Cassandra database using Python, c
 *   Dropping and creating tables
 *   Executing queries programmatically
 
-## Prerequisites
+Prerequisites
 -------------
 
 *   **Python 3.x**
@@ -26,7 +26,7 @@ To install the driver, run:
 pip install cassandra-driver
 ```
 
-## Usage
+Usage
 -----
 
 ### 1\. Establish Connection
@@ -103,7 +103,7 @@ def create_table(session, query, table_name):
         print(f"Failed to create table '{table_name}': {e}")
 ```
 
-## Running the Script
+Running the Script
 ------------------
 
 1.  Ensure Cassandra is running on `127.0.0.1`.
@@ -115,3 +115,7 @@ def create_table(session, query, table_name):
     
 3.  Verify the outputs in your Cassandra database.
 
+License
+-------
+
+This project is licensed under the MIT License.
