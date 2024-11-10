@@ -1,5 +1,3 @@
-Here’s your tidied code in PEP 8 style:
-
 # Import the required modules from the Cassandra driver
 from cassandra.cluster import Cluster  # Cluster class to connect to the Cassandra database
 
